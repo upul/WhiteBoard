@@ -38,6 +38,12 @@ class Primitive(object):
         result_value = self.fun(*argvals, **kwargs)
         return new_node(result_value, (self, args, kwargs, parents))
 
+    def defvjp(self, vjpfun, argnum=0):
+        self.vjps[argnum] = vjpfun
+
+    def vjp(self, argnum, outgrad, args, kwargs):
+        return self.vjps[argnum]()
+
 
 def forward_pass(fun, args, kwargs, argnum=0):
     args = list(args)

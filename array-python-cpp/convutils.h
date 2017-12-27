@@ -1,42 +1,41 @@
 #include <iostream>
 #include <vector>
 
-namespace convutils
-{
-	using namespace std;
+namespace utils {
+    using namespace std;
 
-	class Im2Col
-	{
-	public:
-		Im2Col();
-		~Im2Col();
-        
-        vector<vector<double>> im2col(vector<vector<vector<vector<double>>>> images,
-        	                           int filter_width,
-        	                           int filter_height,
-        	                           int padding_height,
-        	                           int padding_width,
-        	                           int stride_height,
-        	                           int stride_widith
-        	                           );
-		
+    class Im2Col {
+    public:
+        Im2Col();
 
-        vector<vector<vector<vector<double>>>> col2img(vector<vector<double>> im2col,
-		                                                 int batch_size,
-														 int n_channels,
-														 int img_height,
-														 int img_width,
-														 int filter_height,
-														 int filter_width,
-														 int padding_height,
-														 int padding_width,
-														 int stride_height,
-														 int stride_widith);
+        ~Im2Col();
+
+        vector<vector<double>> im2col(const vector<vector<vector<vector<double>>>> images,
+                                      const int filter_width,
+                                      const int filter_height,
+                                      const int padding_height,
+                                      const int padding_width,
+                                      const int stride_height,
+                                      const int stride_width
+        );
 
 
-        vector<vector<vector<vector<double>>>> pad(vector<vector<vector<vector<double>>>> images,
-	                                              int padding_height, 
-	                                              int padding_width);
+        vector<vector<vector<vector<double>>>> col2img(const vector<vector<double>> im2col,
+                                                       const int batch_size,
+                                                       const int n_channels,
+                                                       const int img_height,
+                                                       const int img_width,
+                                                       const int filter_height,
+                                                       const int filter_width,
+                                                       const int padding_height,
+                                                       const int padding_width,
+                                                       const int stride_height,
+                                                       const int stride_widith);
+
+
+        vector<vector<vector<vector<double>>>> pad(const vector<vector<vector<vector<double>>>> images,
+                                                   const int padding_height,
+                                                   const int padding_width);
     };
 
 };

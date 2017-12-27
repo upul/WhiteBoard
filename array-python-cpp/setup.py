@@ -1,12 +1,10 @@
-# Cython compile instructions
-
-from distutils.core import setup
+from distutils.core import setup, Extension
 from Cython.Build import cythonize
 
-# Use python setup.py build_ext --inplace
-# to compile
-
-setup(
-  name = "rectangleapp",
-  ext_modules = cythonize('*.pyx'),
-)
+setup(ext_modules = cythonize(Extension(
+  "convu",                                # the extension name
+  sources=["convu.pyx", "convutils.cpp"], # the Cython source and
+  # additional C++ source files
+  language="c++",                        # generate and compile C++ code
+  extra_compile_args=['-std=c++11', '-O3'],
+)))

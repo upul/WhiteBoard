@@ -35,4 +35,28 @@ class LinkedList(object):
         return data
 
     def find(self, data):
-        pass
+        if self.head is None or data is None:
+            return False
+        current = self.head
+        while current is not None:
+            current_data = current.data
+            if current_data == data:
+                return True
+            current = current.next
+        return False
+
+    def delete(self, data):
+        if self.head is None or data is None:
+            return False
+
+        current = self.head
+        if current.data == data:
+            self.head = current.next
+            return True
+
+        while current.next is not None:
+            if current.next.data == data:  # found it
+                current.next = current.next.next
+                return True
+            current = current.next
+        return False

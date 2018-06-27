@@ -26,6 +26,39 @@ class TestLinkedList(unittest.TestCase):
         linked_list.append('C')
         self.assertEqual(linked_list.get_all_data(), ['A', 'B', 'C'])
 
+    def test_find(self):
+        linked_list = LinkedList()
+
+        linked_list.append('A')
+        self.assertEqual(linked_list.find('A'), True)
+        self.assertEqual(linked_list.find('C'), False)
+
+        linked_list.append('B')
+        linked_list.append('C')
+        linked_list.append('D')
+        linked_list.append('E')
+        self.assertEqual(linked_list.find('B'), True)
+        self.assertEqual(linked_list.find('D'), True)
+        self.assertEqual(linked_list.find('E'), True)
+        self.assertEqual(linked_list.find('Z'), False)
+
+    def test_delete(self):
+        linked_list = LinkedList()
+        linked_list.append('A')
+        self.assertEqual(linked_list.delete('A'), True)
+
+        linked_list = LinkedList()
+        linked_list.append('A')
+        linked_list.append('B')
+        linked_list.append('C')
+        self.assertEqual(linked_list.delete('B'), True)
+        self.assertTrue(linked_list.delete('C'))
+        self.assertFalse(linked_list.delete('C'))
+        self.assertTrue(linked_list.delete('A'))
+        self.assertFalse(linked_list.delete('D'))
+
+        self.assertEqual(linked_list.get_all_data(), [])
+
 
 if __name__ == '__main__':
     unittest.main()

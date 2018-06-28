@@ -59,6 +59,34 @@ class TestLinkedList(unittest.TestCase):
 
         self.assertEqual(linked_list.get_all_data(), [])
 
+    def test_delete_duplicates(self):
+        linked_list = LinkedList()
+        linked_list.append('A')
+        linked_list.remove_duplicate()
+        self.assertEqual(linked_list.get_all_data(), ['A'])
+
+        linked_list = LinkedList()
+        linked_list.append('A')
+        linked_list.append('A')
+        linked_list.remove_duplicate()
+        self.assertEqual(linked_list.get_all_data(), ['A'])
+
+        linked_list = LinkedList()
+        linked_list.append('A')
+        linked_list.append('A')
+        linked_list.append('B')
+        linked_list.append('C')
+        linked_list.append('D')
+        linked_list.append('D')
+        linked_list.append('D')
+        linked_list.append('A')
+        linked_list.remove_duplicate()
+        self.assertEqual(linked_list.get_all_data(), ['A', 'B', 'C', 'D'])
+
+        linked_list = LinkedList()
+        linked_list.remove_duplicate()
+        self.assertEqual(linked_list.get_all_data(), [])
+
 
 if __name__ == '__main__':
     unittest.main()

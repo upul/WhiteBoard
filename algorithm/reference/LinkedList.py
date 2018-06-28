@@ -60,3 +60,27 @@ class LinkedList(object):
                 return True
             current = current.next
         return False
+
+    # Chapter 2 Q 1 Part 1
+    # TODO: (upul) actually we don't need two pointers.
+    def remove_duplicate(self):
+        if self.head is None:
+            return False
+
+        indicator = set()
+        ptr_prev = self.head
+        indicator.add(ptr_prev.data)
+
+        flag = False
+        ptr_current = self.head.next
+        while ptr_current is not None:
+            data = ptr_current.data
+            if data not in indicator:
+                indicator.add(data)
+                ptr_prev = ptr_current
+                ptr_current = ptr_current.next
+            else:
+                ptr_prev.next = ptr_current.next
+                ptr_current = ptr_current.next
+                flag = True
+        return flag

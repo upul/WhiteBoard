@@ -5,6 +5,20 @@ class LinkedList(object):
     def __init__(self, head=None):
         self.head = head
 
+    def size(self):
+        if self.head is None:
+            return 0
+
+        counter = 0
+        current = self.head
+        while current is not None:
+            counter += 1
+            current = current.next
+        return counter
+
+    def is_empty(self):
+        return self.size() == 0
+
     def insert_to_front(self, data):
         if data is None:
             return data

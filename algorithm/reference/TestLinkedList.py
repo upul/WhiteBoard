@@ -5,6 +5,19 @@ from reference.LinkedList import LinkedList
 
 class TestLinkedList(unittest.TestCase):
 
+    def test_size(self):
+        linked_list = LinkedList()
+        self.assertEqual(linked_list.size(), 0)
+
+        linked_list.append('A')
+        self.assertEqual(linked_list.size(), 1)
+
+        linked_list.append('A')
+        linked_list.append('B')
+        linked_list.append('A')
+        self.assertEqual(linked_list.size(), 4)
+
+
     def test_insert_to_front(self):
         linked_list = LinkedList()
         self.assertEqual(linked_list.get_all_data(), [])

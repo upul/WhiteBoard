@@ -7,28 +7,17 @@ def match(regex, ss):
         if index >= len(ss):
             return index, False
 
-        if index + len(reg) >= len(ss):
+        if index + len(reg) - 1 >= len(ss):
             return index, False
 
         return index+len(reg), ss[index: index + len(reg)] == reg
-    # def _match_exact(i, val):
-    #     #print(val)
-    #     for v in val:
-    #         if i < len(ss) and v == ss[i]:
-    #             i += 1
-    #         else:
-    #             return i, False
-    #     return i, True
 
     def _match_any_one(i, val, next):
-        if next is not None and i < len(ss) and ss[i] == next[1][0]:                
-                return i, False                
-
-        if i < len(ss):
+        if i >= len(ss):
+            return i, False
+        else:
             i += 1
             return i, True
-        else:
-            return i, False
 
     def _match_any_zero_more(i, val, next):
         result = False
@@ -45,25 +34,20 @@ def match(regex, ss):
     
     def _match_given_zero_more(i, val, next):
         #result = True
-        while i < len(ss):
+        c = ''
+        zero_match = True
+        while i < len(ss):            
             if ss[i] != val:
                 break
 
-            if next is not None and ss[i] == next[1][0]:
-                return i, True
+            # if next is not None and ss[i] == next[1][0]:
+            #     return i, True
+            c = ss[i]
             i += 1
+        #c = ss[i] if i < len(ss) else ss[i-1]
+        if next is not None and len(c) > 0 and c == next[1][0]:
+            i -= 1        
         return i, True
-
-    # def _match_given_zero_more(i, val, next):
-    #     result = False
-    #     while i < len(ss):
-    #         if next is not None and ss[i] == next[1][0]:                
-    #             return i, True                
-    #         i, r = _match_exact(i, val)
-    #         result = result or r
-    #         if not r:
-    #             break
-    #     return i, result
 
     i = 0
     result = False
@@ -137,5 +121,28 @@ def get_regex_tokens(regex):
 
 
 if __name__ == '__main__':
-    print(get_regex_tokens('ab*'))
-    print(match('ab*', 'ab'))
+    #print(get_regex_tokens('ab*'))
+    assert match('a', 'a') == True
+    assert match('a*', 'a') == True
+    assert match('a*', 'aa') == True
+    assert match('a*', '') == True
+
+    assert match('.', 'a') == True
+    assert match('.*', 'abc') == True
+    assert match('a*', '') == True
+
+    assert match('a*.', 'ab') == True
+    assert match('a*.', 'b') == True
+
+    assert match('a*.pqr', 'bpqr') == True
+    assert match('a*.pqr', 'a') == False
+    assert match('a*.pqr', 'aaabpq') == False
+
+    assert match('mis*is*p*.', 'mississippi') == False
+    assert match('c*a*b', 'aab') == True
+
+    assert match('a.a', 'aaa') == True
+    assert match('a*a', 'aaa') == True
+
+    assert match('ab*a*c*a', 'aaa') == True
+    print('Test Passed')

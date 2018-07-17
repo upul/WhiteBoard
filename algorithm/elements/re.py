@@ -36,7 +36,10 @@ def is_match(data, pattern):
     elif (pattern[0] == '.') and (len(pattern) > 1) and (pattern[1] == '*'):
         return is_match(data[1:], pattern)
     elif (data[0] != pattern[0]) and (len(pattern) > 1) and (pattern[1] == '*'):
-        return is_match(data, pattern[2:])    
+        if len(pattern) > 2 and pattern[0] == pattern[2]:
+            return is_match(pattern[2] + data, pattern[2:])
+        else:
+            return is_match(data, pattern[2:])    
     elif pattern[0] == '.':
         return is_match(data[1:], pattern[1:])
     elif data[0] == pattern[0]:
@@ -65,6 +68,8 @@ if __name__ == '__main__':
     assert is_match("a", ".*aa.*") == False
     assert is_match("", ".*") == True
     assert is_match('ab', '.*') == True
+
+    assert is_match('aab', 'c*a*b') == True
 
     assert is_match('aaa', 'a*a') == True
 

@@ -13,7 +13,7 @@ def _is_dot_zero_more(p):
     assert len(p) == 2
     return p[0] == '.' and p[1] == '*'
 
-def is_match(data, pattern):
+def is_match(data, pattern, last=''):
     data_size = len(data)
     pattern_size = len(pattern)
     if data_size == 0 and pattern_size == 0:
@@ -25,21 +25,22 @@ def is_match(data, pattern):
 
     if data_size > 0 and pattern_size == 0:
         return False
-    if data_size == 0 and len(pattern) > 0:
+    if data_size == 0 and len(pattern) > 0 and len(last) == 0:        
         return False
     
     assert data_size > 0
     assert pattern_size > 0
        
     if (data[0] == pattern[0]) and (len(pattern) > 1) and (pattern[1] == '*'):
-        return is_match(data[1:], pattern)
+        last += data[0]
+        return is_match(data[1:], pattern, last)
     elif (pattern[0] == '.') and (len(pattern) > 1) and (pattern[1] == '*'):
         return is_match(data[1:], pattern)
     elif (data[0] != pattern[0]) and (len(pattern) > 1) and (pattern[1] == '*'):
         return is_match(data, pattern[2:])    
     elif pattern[0] == '.':
         return is_match(data[1:], pattern[1:])
-    elif data[0] == pattern[0]:
+    elif data[0] == pattern[0] :
         return is_match(data[1:], pattern[1:])
     
 

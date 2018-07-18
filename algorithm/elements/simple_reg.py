@@ -144,5 +144,5 @@ if __name__ == '__main__':
     assert match('a.a', 'aaa') == True
     assert match('a*a', 'aaa') == True
 
-    assert match('ab*a*c*a', 'aaa') == True
+    assert match('ab*a*c*ab*', 'aaa') == True
     print('Test Passed')

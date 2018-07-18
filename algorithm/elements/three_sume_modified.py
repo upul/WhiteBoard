@@ -21,8 +21,14 @@ def three_sum(A):
     
     A = sorted(A)
     result = set()
+    #visited = set()
     for i in range(len(A)):
         current = A[i]
+        # if current in visited:
+        #     print(current)
+        #     continue
+        # else:
+        #     visited.add(current)
         expected_sum = -1 * current
         elements = find_two_to_given_sum(expected_sum, i)
         if len(elements) > 0:
@@ -30,8 +36,11 @@ def three_sum(A):
             y = max(elements[0], elements[1], current)
             z = elements[0] + elements[1] + current - x - y
             if (x, z, y) not in result:
+                #elements.append(current)
                 result.add((x, z, y))
-    print(list(result))
+    
+    return [list(t) for t in result]
+    #print(list(result))
         
 if __name__ == '__main__':
     A = [-1, 0, 1, 2, -1, -4]

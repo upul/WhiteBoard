@@ -35,7 +35,7 @@ def lps_iter(input):
     if input == '':
         return ''
         
-    cache = [['']*len(input) for _ in range(len(input))]
+    cache = [[0]*len(input) for i in range(len(input))]
     
     for step in range(len(input)):
         for i in range(len(input)-step):
@@ -45,39 +45,44 @@ def lps_iter(input):
             elif i + 1 == j and input[i] == input[j]:
                 cache[i][j] = input[i:j+1]
             elif input[i] == input[j]:
-                if len(cache[i+1][j-1]) == j - i - 1:
+                middle = cache[i+1][j-1]
+                if len(middle) == j - i - 1:
                     cache[i][j] = input[i] + cache[i+1][j-1] + input[j]
                 else:
-                    cache[i][j] = cache[i+1][j-1]
+                    large = cache[i][j-1] if len(cache[i][j-1]) > len(cache[i+1][j]) else cache[i+1][j]
+                    cache[i][j] = large
             else:
+                #print(i, j)
                 cache[i][j] = cache[i+1][j] \
                 if len(cache[i+1][j]) > len(cache[i][j-1]) \
                 else cache[i][j-1]
     
-    for i in range(len(cache)):
-        print(cache[i])
+    #for i in range(len(cache)):
+        #print(cache[i])
 
     return cache[0][len(input)-1]
 
 
 if __name__ == '__main__':
-    print(lps_iter('babadada'))
-    #print(lps_iter("cyyoacmjwjubfkzrrbvquqkwhsxvmytmjvbborrtoiyotobzjmohpadfrvmxuagbdczsjuekjrmcwyaovpiogspbslcppxojgbfxhtsxmecgqjfuvahzpgprscjwwutwoiksegfreortttdotgxbfkisyakejihfjnrdngkwjxeituomuhmeiesctywhryqtjimwjadhhymydlsmcpycfdzrjhstxddvoqprrjufvihjcsoseltpyuaywgiocfodtylluuikkqkbrdxgjhrqiselmwnpdzdmpsvbfimnoulayqgdiavdgeiilayrafxlgxxtoqskmtixhbyjikfmsmxwribfzeffccczwdwukubopsoxliagenzwkbiveiajfirzvngverrbcwqmryvckvhpiioccmaqoxgmbwenyeyhzhliusupmrgmrcvwmdnniipvztmtklihobbekkgeopgwipihadswbqhzyxqsdgekazdtnamwzbitwfwezhhqznipalmomanbyezapgpxtjhudlcsfqondoiojkqadacnhcgwkhaxmttfebqelkjfigglxjfqegxpcawhpihrxydprdgavxjygfhgpcylpvsfcizkfbqzdnmxdgsjcekvrhesykldgptbeasktkasyuevtxrcrxmiylrlclocldmiwhuizhuaiophykxskufgjbmcmzpogpmyerzovzhqusxzrjcwgsdpcienkizutedcwrmowwolekockvyukyvmeidhjvbkoortjbemevrsquwnjoaikhbkycvvcscyamffbjyvkqkyeavtlkxyrrnsmqohyyqxzgtjdavgwpsgpjhqzttukynonbnnkuqfxgaatpilrrxhcqhfyyextrvqzktcrtrsbimuokxqtsbfkrgoiznhiysfhzspkpvrhtewthpbafmzgchqpgfsuiddjkhnwchpleibavgmuivfiorpteflholmnxdwewj"))
+    assert lps_iter('abcda') == 'b'
+    assert lps_iter("babad") == 'bab'
 
-    # str = 'a'
-    # assert lps(str) == 'a'
+    str = 'a'
+    assert lps_iter(str) == 'a'
 
-    # str = 'aa'
-    # assert lps(str) == 'aa'
+    str = 'aa'
+    assert lps_iter(str) == 'aa'
 
-    # str = 'ab'
-    # assert lps(str) == ''
+    str = 'ab'
+    assert lps_iter(str) == 'a'
 
-    # str = 'abc'
-    # assert lps(str) == ''
+    str = 'abc'
+    assert lps_iter(str) == 'a'
 
-    # str = 'aabac'
-    # assert lps(str) == 'aba'
+    str = 'aabac'
+    assert lps_iter(str) == 'aba'
 
-    # str = 'abapqrqpr'
-    # assert lps(str) == 'pqrqp'
+    str = 'abapqrqpr'
+    assert lps_iter(str) == 'pqrqp'
+
+    print(lps_iter("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"))
